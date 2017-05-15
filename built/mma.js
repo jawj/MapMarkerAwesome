@@ -3396,7 +3396,7 @@ var mapMarkerAwesome = (function () {
     var pathTemplate = processTemplate('<path transform="`transform`" d="`path`" fill="`fill`"/>');
     var rgbTemplate = processTemplate('rgb(`r`,`g`,`b`)');
     return function (code, _a) {
-        var _b = _a === void 0 ? {} : _a, _c = _b.icon, icon = _c === void 0 ? { r: 255, g: 255, b: 255 } : _c, _d = _b.fill, fill = _d === void 0 ? { r: 100, g: 100, b: 100 } : _d, _e = _b.stroke, stroke = _e === void 0 ? { r: 255, g: 255, b: 255 } : _e, _f = _b.customTransform, customTransform = _f === void 0 ? '' : _f;
+        var _b = _a === void 0 ? {} : _a, _c = _b.icon, icon = _c === void 0 ? { r: 255, g: 255, b: 255 } : _c, _d = _b.fill, fill = _d === void 0 ? { r: 70, g: 140, b: 210 } : _d, _e = _b.stroke, stroke = _e === void 0 ? { r: 255, g: 255, b: 255 } : _e, _f = _b.customTransform, customTransform = _f === void 0 ? '' : _f;
         var glyph = fontAwesome.paths[code] || fontAwesome.paths[fontAwesome.codes[code.replace(/^fa-/, '')]];
         if (!glyph)
             throw new Error("Unknown FontAwesome character: " + code);

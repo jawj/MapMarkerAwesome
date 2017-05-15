@@ -3420,7 +3420,7 @@ const mapMarkerAwesome = (function () {
 
   return function (code: string, {
     icon = { r: 255, g: 255, b: 255 },
-    fill = { r: 100, g: 100, b: 100 },
+    fill = { r: 70, g: 140, b: 210 },
     stroke = { r: 255, g: 255, b: 255 },
     customTransform = ''
   }: {
