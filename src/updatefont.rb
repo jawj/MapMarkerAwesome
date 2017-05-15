@@ -13,7 +13,7 @@ hDefault= font.attribute('horiz-adv-x').value.to_f
 paths = Hash[code_map.map { |k, v| 
   glyph = font.xpath("glyph[@unicode = '#{v}']").first
   h = glyph.attribute('horiz-adv-x')
-  [v, [h ? h.value.to_f : hDefault, URI.escape(glyph.attribute('d').value)]]
+  [v, [h ? h.value.to_i : hDefault, glyph.attribute('d').value]]
 }]
 
 # write json to incorporate into mma.ts and index.html

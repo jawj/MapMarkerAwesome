@@ -3408,7 +3408,7 @@ var mapMarkerAwesome = (function () {
             stroke: applyTemplate(rgbTemplate, stroke),
             glyph: icon ? applyTemplate(pathTemplate, {
                 transform: encodeURIComponent(transform),
-                path: path,
+                path: encodeURIComponent(path),
                 fill: applyTemplate(rgbTemplate, icon)
             }) : ''
         });
