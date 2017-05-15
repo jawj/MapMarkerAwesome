@@ -3416,8 +3416,8 @@ const mapMarkerAwesome = (function () {
   const svgTemplate = processTemplate('<svg xmlns="http://www.w3.org/2000/svg" width="`width`" height="`height`" viewBox="0 0 `width` `height`"><g fill="none" fill-rule="evenodd" transform="scale(`scale`)"><path d="M22 11c0 1.42-.226 2.585-.677 3.496l-7.465 15.117c-.218.43-.543.77-.974 1.016-.43.246-.892.37-1.384.37-.492 0-.954-.124-1.384-.37-.43-.248-.75-.587-.954-1.017L1.677 14.496C1.227 13.586 1 12.42 1 11c0-2.76 1.025-5.117 3.076-7.07C6.126 1.977 8.602 1 11.5 1c2.898 0 5.373.977 7.424 2.93C20.974 5.883 22 8.24 22 11z" stroke="`stroke`" stroke-width=".6" fill="`fill`" fill-rule="nonzero"/>`glyph`</g></svg>');
 
   const pathTemplate = processTemplate('<path transform="`transform`" d="`path`" fill="`fill`"/>');
-
   const rgbTemplate = processTemplate('rgb(`r`,`g`,`b`)');
+  const rgbaTemplate = processTemplate('rgba(`r`,`g`,`b`,`a`)');
 
   return function (code: string, {
     icon = { r: 255, g: 255, b: 255 },
@@ -3446,12 +3446,12 @@ const mapMarkerAwesome = (function () {
       width: width,
       height: height,
       scale: scale,
-      fill: applyTemplate(rgbTemplate, fill),
-      stroke: applyTemplate(rgbTemplate, stroke),
+      fill: applyTemplate(fill.a == null ? rgbTemplate : rgbaTemplate, fill),
+      stroke: applyTemplate(stroke.a == null ? rgbTemplate : rgbaTemplate, stroke),
       glyph: icon ? applyTemplate(pathTemplate, {
         transform: encodeURIComponent(transform),
         path: encodeURIComponent(path),
-        fill: applyTemplate(rgbTemplate, icon)
+        fill: applyTemplate(icon.a == null ? rgbTemplate : rgbaTemplate, icon)
       }) : ''
     });
     return 'data:image/svg+xml,' + svg;
