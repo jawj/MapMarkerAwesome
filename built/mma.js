@@ -3396,23 +3396,26 @@ var mapMarkerAwesome = (function () {
     var pathTemplate = processTemplate('<path transform="`transform`" d="`path`" fill="`fill`"/>');
     var rgbTemplate = processTemplate('rgb(`r`,`g`,`b`)');
     var rgbaTemplate = processTemplate('rgba(`r`,`g`,`b`,`a`)');
+    var defaultHeight = 42, originalHeight = 32, originalWidth = 23;
     return function (code, _a) {
-        var _b = _a === void 0 ? {} : _a, _c = _b.icon, icon = _c === void 0 ? { r: 255, g: 255, b: 255 } : _c, _d = _b.fill, fill = _d === void 0 ? { r: 65, g: 130, b: 195 } : _d, _e = _b.stroke, stroke = _e === void 0 ? { r: 255, g: 255, b: 255 } : _e, _f = _b.height, height = _f === void 0 ? 42 : _f, _g = _b.customTransform, customTransform = _g === void 0 ? '' : _g;
-        var glyph = fontAwesome.paths[code] || fontAwesome.paths[fontAwesome.codes[code.replace(/^fa-/, '')]];
-        if (!glyph)
-            throw new Error("Unknown FontAwesome character: " + code);
-        var h, path;
-        h = glyph[0], path = glyph[1];
-        var scale = height / 32;
-        var width = Math.round(23 * scale);
-        var transform = customTransform + " translate(11.5 14.5) scale(0.006 -0.006) translate(" + h * -0.5 + ", 0)";
+        var _b = _a === void 0 ? {} : _a, _c = _b.icon, icon = _c === void 0 ? { r: 255, g: 255, b: 255 } : _c, _d = _b.fill, fill = _d === void 0 ? { r: 65, g: 130, b: 195 } : _d, _e = _b.stroke, stroke = _e === void 0 ? { r: 255, g: 255, b: 255 } : _e, _f = _b.height, height = _f === void 0 ? defaultHeight : _f, _g = _b.customTransform, customTransform = _g === void 0 ? '' : _g;
+        var horizAdjX, path;
+        if (code) {
+            var glyph = fontAwesome.paths[code] || fontAwesome.paths[fontAwesome.codes[code.replace(/^fa-/, '')]];
+            if (!glyph)
+                throw new Error("Unknown FontAwesome character: " + code);
+            horizAdjX = glyph[0], path = glyph[1];
+        }
+        var transform = customTransform + " translate(11.5 14.5) scale(0.006 -0.006) translate(" + horizAdjX * -0.5 + ", 0)";
+        var scale = height / originalHeight;
+        var width = Math.round(originalWidth * scale);
         var svg = applyTemplate(svgTemplate, {
             width: width,
             height: height,
             scale: scale,
             fill: applyTemplate(fill.a == null ? rgbTemplate : rgbaTemplate, fill),
             stroke: applyTemplate(stroke.a == null ? rgbTemplate : rgbaTemplate, stroke),
-            glyph: icon ? applyTemplate(pathTemplate, {
+            glyph: code && icon ? applyTemplate(pathTemplate, {
                 transform: encodeURIComponent(transform),
                 path: encodeURIComponent(path),
                 fill: applyTemplate(icon.a == null ? rgbTemplate : rgbaTemplate, icon)

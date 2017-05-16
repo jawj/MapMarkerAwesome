@@ -3419,11 +3419,13 @@ const mapMarkerAwesome = (function () {
   const rgbTemplate = processTemplate('rgb(`r`,`g`,`b`)');
   const rgbaTemplate = processTemplate('rgba(`r`,`g`,`b`,`a`)');
 
-  return function (code: string, {
+  const defaultHeight = 42, originalHeight = 32, originalWidth = 23;
+
+  return function (code: string | null, {
     icon = { r: 255, g: 255, b: 255 },
     fill = { r: 65, g: 130, b: 195 },
     stroke = { r: 255, g: 255, b: 255 },
-    height = 42,
+    height = defaultHeight,
     customTransform = ''
   }: {
       icon?: RGBA | false,
@@ -3433,14 +3435,15 @@ const mapMarkerAwesome = (function () {
       customTransform?: string
     } = {}): SVG {
     
-    const glyph = fontAwesome.paths[code] || fontAwesome.paths[fontAwesome.codes[code.replace(/^fa-/, '')]];
-    if (!glyph) throw new Error(`Unknown FontAwesome character: ${code}`);
-
-    let h: number, path: string;
-    [h, path] = glyph;
-    const scale = height / 32;
-    const width = Math.round(23 * scale);
-    const transform = `${customTransform} translate(11.5 14.5) scale(0.006 -0.006) translate(${h * -0.5}, 0)`;
+    let horizAdjX: number, path: string;
+    if (code) {
+      const glyph = fontAwesome.paths[code] || fontAwesome.paths[fontAwesome.codes[code.replace(/^fa-/, '')]];
+      if (!glyph) throw new Error(`Unknown FontAwesome character: ${code}`);
+      [horizAdjX, path] = glyph;
+    }
+    const transform = `${customTransform} translate(11.5 14.5) scale(0.006 -0.006) translate(${horizAdjX * -0.5}, 0)`;
+    const scale = height / originalHeight;
+    const width = Math.round(originalWidth * scale);
 
     const svg = applyTemplate(svgTemplate, {
       width: width,
@@ -3448,7 +3451,7 @@ const mapMarkerAwesome = (function () {
       scale: scale,
       fill: applyTemplate(fill.a == null ? rgbTemplate : rgbaTemplate, fill),
       stroke: applyTemplate(stroke.a == null ? rgbTemplate : rgbaTemplate, stroke),
-      glyph: icon ? applyTemplate(pathTemplate, {
+      glyph: code && icon ? applyTemplate(pathTemplate, {
         transform: encodeURIComponent(transform),
         path: encodeURIComponent(path),
         fill: applyTemplate(icon.a == null ? rgbTemplate : rgbaTemplate, icon)
