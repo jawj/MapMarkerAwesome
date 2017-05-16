@@ -9,7 +9,7 @@ code_map = Hash[icon_data.map { |i| [i["id"], i["unicode"].to_i(16).chr(Encoding
 # font
 svg = Nokogiri::XML(open('https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/fonts/fontawesome-webfont.svg'))
 font = svg.xpath('/svg/defs/font')
-hDefault= font.attribute('horiz-adv-x').value.to_f
+hDefault= font.attribute('horiz-adv-x').value.to_i
 paths = Hash[code_map.map { |k, v| 
   glyph = font.xpath("glyph[@unicode = '#{v}']").first
   h = glyph.attribute('horiz-adv-x')
