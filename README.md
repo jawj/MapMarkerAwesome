@@ -1,6 +1,6 @@
 # Map Marker Awesome
 
-For years I have been surprised at the dearth of quality map marker icons with a choice of colours, sizes and symbols. No longer! This project provides ...
+This project provides ...
 
 * Nice, simple, scalable SVG map markers
 * with any [Font Awesome](http://fontawesome.io/) icon
