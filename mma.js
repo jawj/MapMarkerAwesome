@@ -3411,7 +3411,7 @@ var mapMarkerAwesomeFactory = (function (dataURI) {
                 throw new Error("Unknown FontAwesome character: " + code);
             horizAdjX = glyph[0], path = glyph[1];
         }
-        var transform = iconTransform + " translate(11.5 14.5) scale(0.006 -0.006) translate(" + horizAdjX * -0.5 + ", 0)";
+        var transform = "translate(11.5 10) " + iconTransform + " scale(0.006 -0.006) translate(" + horizAdjX * -0.5 + ", -768)";
         var scale = height / originalHeight;
         var width = Math.round(originalWidth * scale);
         var svg = applyTemplate(svgTemplate, {
