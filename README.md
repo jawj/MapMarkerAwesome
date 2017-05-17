@@ -8,9 +8,9 @@ This project provides ...
 
 ## Use it two ways
 
-1. [Generate and download individual SVGs](http://) with your choice of size, colour and [Font Awesome](http://fontawesome.io/) icon.
+1. [Generate and download individual SVGs](https://jawj.github.io/MapMarkerAwesome/) with your choice of size, colour and [Font Awesome](http://fontawesome.io/) icon.
 
-2. Embed [the JS library](http://) (~130KB gzipped), to dynamically generate markers with any size, colour and icon at run-time (as [data: URIs](http://)).
+2. Embed [the JS library](https://raw.githubusercontent.com/jawj/MapMarkerAwesome/master/built/mma.js) (~130KB gzipped), to dynamically generate markers with any size, colour and icon at run-time (as [data: URIs](https://en.wikipedia.org/wiki/Data_URI_scheme)).
 
 ## Library examples
 
