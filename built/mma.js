@@ -1,3 +1,9 @@
+/*
+=== Map Marker Awesome ===
+https://github.com/jawj/MapMarkerAwesome
+Copyright (C) 2017 George MacKerron, released under MIT licence
+Except Font Awesome icons, subject to orignal licence: http://fontawesome.io/
+*/
 var mapMarkerAwesomeFactory = (function (dataURI) {
     var fontAwesome = {
         "codes": {

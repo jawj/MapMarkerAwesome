@@ -91,3 +91,8 @@ The `transform` property can be used to tweak the display of any particular icon
 Colour values (`fill`, `stroke` and `icon`) can be specified as any valid SVG colour string (so `white`, `#fff`, `#ffffff`, `rgb(255,255,255)` and `rgba(255,255,255,1)` are all equivalent). 
 
 They can alternatively be specified as an object with `r`, `g`, `b` keys (with integer values 0 – 255) and an optional `a` key (with numeric value 0 – 1).
+
+## Licence
+
+Code released under the [MIT licence](https://opensource.org/licenses/mit-license.html), except [Font Awesome](http://fontawesome.io/) icons, which remain subject to their original licence (I think).
+
