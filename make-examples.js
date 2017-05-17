@@ -26,6 +26,6 @@ var randomColourPlainIconSrc = mapMarkerAwesome(null, { fill: { r: randByte(), g
 
 // end from README
 
-['plain', 'music', 'largeHeart', 'redWithYellowStar', 'home', 'bigHome', 'arrow', 'rotatedArrow', 'randomColourPlain'].forEach(function (stem) {
+['plain', 'music', 'alsoMusic', 'alsoAlsoMusic', 'largeHeart', 'redWithYellowStar', 'home', 'bigHome', 'arrow', 'rotatedArrow', 'randomColourPlain'].forEach(function (stem) {
   fs.writeFileSync('examples/' + stem + '.svg', eval(stem + 'IconSrc'));
 });
