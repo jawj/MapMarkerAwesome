@@ -1,4 +1,4 @@
-var mapMarkerAwesome = (function () {
+var mapMarkerAwesomeFactory = (function (dataURI) {
     var fontAwesome = {
         "codes": {
             "glass": "\uf000",
@@ -3380,10 +3380,11 @@ var mapMarkerAwesome = (function () {
             ]
         }
     };
+    var maybeEscape = dataURI ? function (s) { return encodeURIComponent(s); } : function (s) { return s; };
     function templateFromString(str) {
         var template = str.split('`');
         for (var i = 0, len = template.length; i < len; i += 2)
-            template[i] = encodeURIComponent(template[i]);
+            template[i] = maybeEscape(template[i]);
         return template;
     }
     function applyTemplate(template, values) {
@@ -3397,7 +3398,7 @@ var mapMarkerAwesome = (function () {
     var rgbTemplate = templateFromString('rgb(`r`,`g`,`b`)');
     var rgbaTemplate = templateFromString('rgba(`r`,`g`,`b`,`a`)');
     var processColor = function (c) {
-        return typeof c == 'string' ? encodeURIComponent(c) :
+        return typeof c == 'string' ? maybeEscape(c) :
             applyTemplate(c.a == null ? rgbTemplate : rgbaTemplate, c);
     };
     var defaultHeight = 42, originalHeight = 32, originalWidth = 23;
@@ -3410,7 +3411,7 @@ var mapMarkerAwesome = (function () {
                 throw new Error("Unknown FontAwesome character: " + code);
             horizAdjX = glyph[0], path = glyph[1];
         }
-        var transform = iconTransform + " translate(11.5 14.5) scale(0.006 -0.006) translate(" + horizAdjX * -0.5 + ", 0)";
+        var transform = "translate(11.5 10) " + iconTransform + " scale(0.006 -0.006) translate(" + horizAdjX * -0.5 + ", -768)";
         var scale = height / originalHeight;
         var width = Math.round(originalWidth * scale);
         var svg = applyTemplate(svgTemplate, {
@@ -3418,12 +3419,14 @@ var mapMarkerAwesome = (function () {
             fill: processColor(fill),
             stroke: processColor(stroke),
             glyph: code ? applyTemplate(pathTemplate, {
-                transform: encodeURIComponent(transform),
-                path: encodeURIComponent(path),
+                transform: maybeEscape(transform),
+                path: maybeEscape(path),
                 fill: processColor(icon)
             }) : ''
         });
-        return 'data:image/svg+xml,' + svg;
+        return dataURI ? 'data:image/svg+xml,' + svg : svg;
     };
-})();
+});
+if (typeof module == 'object')
+    module.exports = mapMarkerAwesomeFactory;
 //# sourceMappingURL=mma.js.map

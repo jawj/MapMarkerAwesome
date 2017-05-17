@@ -1,5 +1,5 @@
 
-const mapMarkerAwesome = (function () {
+const mapMarkerAwesomeFactory = (function (dataURI: boolean) {
 
   interface FontData {
     codes: { [key: string]: string };
@@ -3402,9 +3402,11 @@ const mapMarkerAwesome = (function () {
     }
   };
 
+  const maybeEscape = dataURI ? (s: string) => encodeURIComponent(s) : (s: string) => s;
+
   function templateFromString(str: string): Template {
     const template = str.split('`');
-    for (let i = 0, len = template.length; i < len; i += 2) template[i] = encodeURIComponent(template[i]);
+    for (let i = 0, len = template.length; i < len; i += 2) template[i] = maybeEscape(template[i]);
     return template;
   }
   function applyTemplate(template: Template, values: TemplateValues): string {
@@ -3420,7 +3422,7 @@ const mapMarkerAwesome = (function () {
   const rgbaTemplate = templateFromString('rgba(`r`,`g`,`b`,`a`)');
 
   const processColor = (c: Color): string =>
-    typeof c == 'string' ? encodeURIComponent(c) :
+    typeof c == 'string' ? maybeEscape(c) :
       applyTemplate(c.a == null ? rgbTemplate : rgbaTemplate, c);
 
   const defaultHeight = 42, originalHeight = 32, originalWidth = 23;
@@ -3445,7 +3447,7 @@ const mapMarkerAwesome = (function () {
       if (!glyph) throw new Error(`Unknown FontAwesome character: ${code}`);
       [horizAdjX, path] = glyph;
     }
-    const transform = `${iconTransform} translate(11.5 14.5) scale(0.006 -0.006) translate(${horizAdjX * -0.5}, 0)`;
+    const transform = `translate(11.5 10) ${iconTransform} scale(0.006 -0.006) translate(${horizAdjX * -0.5}, -768)`;
     const scale = height / originalHeight;
     const width = Math.round(originalWidth * scale);
     
@@ -3454,11 +3456,14 @@ const mapMarkerAwesome = (function () {
       fill: processColor(fill),
       stroke: processColor(stroke),
       glyph: code ? applyTemplate(pathTemplate, {
-        transform: encodeURIComponent(transform),
-        path: encodeURIComponent(path),
+        transform: maybeEscape(transform),
+        path: maybeEscape(path),
         fill: processColor(icon)
       }) : ''
     });
-    return 'data:image/svg+xml,' + svg;
+    return dataURI ? 'data:image/svg+xml,' + svg : svg;
   }
-})();
+});
+
+declare const module: any;
+if (typeof module == 'object') module.exports = mapMarkerAwesomeFactory;
