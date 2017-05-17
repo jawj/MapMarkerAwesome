@@ -5,10 +5,9 @@ const mapMarkerAwesome = (function () {
     codes: { [key: string]: string };
     paths: { [key: string]: [number, string] };
   }
-
-  type Template = string[];
   type SVG = string;
 
+  type Template = string[];
   interface TemplateValues {
     [key: string]: string | number;
   }
@@ -19,6 +18,7 @@ const mapMarkerAwesome = (function () {
     b: number;
     a?: number;
   }
+  type Color = string | RGBA;
   
   const fontAwesome: FontData = {
     "codes": {
@@ -3402,7 +3402,7 @@ const mapMarkerAwesome = (function () {
     }
   };
 
-  function processTemplate(str: string): Template {
+  function templateFromString(str: string): Template {
     const template = str.split('`');
     for (let i = 0, len = template.length; i < len; i += 2) template[i] = encodeURIComponent(template[i]);
     return template;
@@ -3412,27 +3412,31 @@ const mapMarkerAwesome = (function () {
     for (let i = 1, len = template.length; i < len; i += 2) result[i] = String(values[result[i]]);
     return result.join('');
   }
+  
+  const svgTemplate = templateFromString('<svg xmlns="http://www.w3.org/2000/svg" width="`width`" height="`height`" viewBox="0 0 `width` `height`"><g fill="none" fill-rule="evenodd" transform="scale(`scale`)"><path d="M22 11c0 1.42-.226 2.585-.677 3.496l-7.465 15.117c-.218.43-.543.77-.974 1.016-.43.246-.892.37-1.384.37-.492 0-.954-.124-1.384-.37-.43-.248-.75-.587-.954-1.017L1.677 14.496C1.227 13.586 1 12.42 1 11c0-2.76 1.025-5.117 3.076-7.07C6.126 1.977 8.602 1 11.5 1c2.898 0 5.373.977 7.424 2.93C20.974 5.883 22 8.24 22 11z" stroke="`stroke`" stroke-width=".6" fill="`fill`" fill-rule="nonzero"/>`glyph`</g></svg>');
 
-  const svgTemplate = processTemplate('<svg xmlns="http://www.w3.org/2000/svg" width="`width`" height="`height`" viewBox="0 0 `width` `height`"><g fill="none" fill-rule="evenodd" transform="scale(`scale`)"><path d="M22 11c0 1.42-.226 2.585-.677 3.496l-7.465 15.117c-.218.43-.543.77-.974 1.016-.43.246-.892.37-1.384.37-.492 0-.954-.124-1.384-.37-.43-.248-.75-.587-.954-1.017L1.677 14.496C1.227 13.586 1 12.42 1 11c0-2.76 1.025-5.117 3.076-7.07C6.126 1.977 8.602 1 11.5 1c2.898 0 5.373.977 7.424 2.93C20.974 5.883 22 8.24 22 11z" stroke="`stroke`" stroke-width=".6" fill="`fill`" fill-rule="nonzero"/>`glyph`</g></svg>');
+  const pathTemplate = templateFromString('<path transform="`transform`" d="`path`" fill="`fill`"/>');
+  const rgbTemplate = templateFromString('rgb(`r`,`g`,`b`)');
+  const rgbaTemplate = templateFromString('rgba(`r`,`g`,`b`,`a`)');
 
-  const pathTemplate = processTemplate('<path transform="`transform`" d="`path`" fill="`fill`"/>');
-  const rgbTemplate = processTemplate('rgb(`r`,`g`,`b`)');
-  const rgbaTemplate = processTemplate('rgba(`r`,`g`,`b`,`a`)');
+  const processColor = (c: Color): string =>
+    typeof c == 'string' ? encodeURIComponent(c) :
+      applyTemplate(c.a == null ? rgbTemplate : rgbaTemplate, c);
 
   const defaultHeight = 42, originalHeight = 32, originalWidth = 23;
 
   return function (code: string | null, {
-    icon = { r: 255, g: 255, b: 255 },
-    fill = { r: 65, g: 130, b: 195 },
-    stroke = { r: 255, g: 255, b: 255 },
+    icon = '#fff',
+    fill = '#4182c3',
+    stroke = '#fff',
     height = defaultHeight,
-    customTransform = ''
+    iconTransform = ''
   }: {
-      icon?: RGBA | false,
-      fill?: RGBA,
-      stroke?: RGBA,
+      icon?: Color,
+      fill?: Color,
+      stroke?: Color,
       height?: number,
-      customTransform?: string
+      iconTransform?: string
     } = {}): SVG {
     
     let horizAdjX: number, path: string;
@@ -3441,20 +3445,18 @@ const mapMarkerAwesome = (function () {
       if (!glyph) throw new Error(`Unknown FontAwesome character: ${code}`);
       [horizAdjX, path] = glyph;
     }
-    const transform = `${customTransform} translate(11.5 14.5) scale(0.006 -0.006) translate(${horizAdjX * -0.5}, 0)`;
+    const transform = `${iconTransform} translate(11.5 14.5) scale(0.006 -0.006) translate(${horizAdjX * -0.5}, 0)`;
     const scale = height / originalHeight;
     const width = Math.round(originalWidth * scale);
-
+    
     const svg = applyTemplate(svgTemplate, {
-      width: width,
-      height: height,
-      scale: scale,
-      fill: applyTemplate(fill.a == null ? rgbTemplate : rgbaTemplate, fill),
-      stroke: applyTemplate(stroke.a == null ? rgbTemplate : rgbaTemplate, stroke),
-      glyph: code && icon ? applyTemplate(pathTemplate, {
+      width: width, height: height, scale: scale,
+      fill: processColor(fill),
+      stroke: processColor(stroke),
+      glyph: code ? applyTemplate(pathTemplate, {
         transform: encodeURIComponent(transform),
         path: encodeURIComponent(path),
-        fill: applyTemplate(icon.a == null ? rgbTemplate : rgbaTemplate, icon)
+        fill: processColor(icon)
       }) : ''
     });
     return 'data:image/svg+xml,' + svg;
