@@ -26,6 +26,7 @@ Create these markers:
 ![bigHome](https://jawj.github.io/MapMarkerAwesome/examples/bigHome.svg)
 ![arrow](https://jawj.github.io/MapMarkerAwesome/examples/arrow.svg)
 ![rotatedArrow](https://jawj.github.io/MapMarkerAwesome/examples/rotatedArrow.svg)
+![randomColourPlain](https://jawj.github.io/MapMarkerAwesome/examples/randomColourPlain.svg)
 
 Like this:
 
@@ -52,6 +53,11 @@ Like this:
     fill: '#fff', 
     icon: '#444', 
     stroke: '#444'
+  });
+
+  function randByte() { return Math.floor(Math.random() * 256); }
+  var randomColourPlainIconSrc = mapMarkerAwesome(null, { 
+    fill: { r: randByte(), g: randByte(), b: randByte() } 
   });
 </script>
 ```
