@@ -41,13 +41,18 @@ Like this:
   var alsoAlsoMusicIconSrc = mapMarkerAwesome('\uf001');
 
   var largeHeartIconSrc = mapMarkerAwesome('heart', { height: 52 });
-  var redWithYellowStarIconSrc = mapMarkerAwesome('star', { fill: '#ff0000', icon: '#ffff00' });
+  var redWithYellowStarIconSrc = mapMarkerAwesome('star', { fill: '#f00', icon: '#ff0' });
 
   var homeIconSrc = mapMarkerAwesome('home');
   var bigHomeIconSrc = mapMarkerAwesome('home', { iconTransform: 'scale(1.25)' });
 
   var arrowIconSrc = mapMarkerAwesome('arrow-up', { fill: '#fff', icon: '#444', stroke: '#444' });
-  var rotatedArrowIconSrc = mapMarkerAwesome('arrow-up', { iconTransform: 'rotate(22.5)', fill: '#fff', icon: '#444', stroke: '#444' });
+  var rotatedArrowIconSrc = mapMarkerAwesome('arrow-up', { 
+    iconTransform: 'rotate(22.5)', 
+    fill: '#fff', 
+    icon: '#444', 
+    stroke: '#444'
+  });
 </script>
 ```
 
