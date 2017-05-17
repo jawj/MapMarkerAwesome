@@ -16,25 +16,29 @@ This project provides ...
 
 Use it like this:
 
-    <script src="mma.js"></script>
-    <script>
-      var plainIconSrc = mapMarkerAwesome();
+```javascript
+<script src="mma.js"></script>
+<script>
+  var plainIconSrc = mapMarkerAwesome();
 
-      var musicIconSrc = mapMarkerAwesome('music');
-      var alsoMusicIconSrc = mapMarkerAwesome('fa-music');
-      var alsoAlsoMusicIconSrc = mapMarkerAwesome('\uf001');
-      
-      var largeHeartIconSrc = mapMarkerAwesome('heart', { height: 52 });
-      var redWithYellowStarIconSrc = mapMarkerAwesome('star', { fill: '#ff0000', icon: '#ffff00' });
-      var shiftedHomeIconSrc = mapMarkerAwesome('home', { iconTransform: 'translate(20 0)', icon: '#4182c3' });
+  var musicIconSrc = mapMarkerAwesome('music');
+  var alsoMusicIconSrc = mapMarkerAwesome('fa-music');
+  var alsoAlsoMusicIconSrc = mapMarkerAwesome('\uf001');
 
-      function randByte() { return Math.floor(Math.random() * 256); }
-      var randomColorPlainIcon = mapMarkerAwesome(null, { fill: {r: randByte(), g: randByte(), b: randByte() });
-    </script>
+  var largeHeartIconSrc = mapMarkerAwesome('heart', { height: 52 });
+  var redWithYellowStarIconSrc = mapMarkerAwesome('star', { fill: '#ff0000', icon: '#ffff00' });
+  var shiftedHomeIconSrc = mapMarkerAwesome('home', { iconTransform: 'translate(20 0)', icon: '#4182c3' });
+
+  function randByte() { return Math.floor(Math.random() * 256); }
+  var randomColorPlainIcon = mapMarkerAwesome(null, { fill: {r: randByte(), g: randByte(), b: randByte() });
+</script>
+```
 
 ## Library docs
 
-    var iconSVGAsDataURI = mapMarkerAwesome(code, opts);
+```javascript
+var iconSVGAsDataURI = mapMarkerAwesome(code, opts);
+```
 
 `code` is a string identifying the [Font Awesome](http://fontawesome.io/) icon that's required. You can pass either the Font Awesome icon id (with or without the `fa-` prefix) or the equivalent Unicode character — so `star`, `fa-star` or `\uf005` are exactly equivalent. Pass `null` (or nothing) for a plain marker with no icon.
 
