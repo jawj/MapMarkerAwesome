@@ -4,9 +4,10 @@
     <style>
       body {
         padding: 20px 60px;
-        font: 16px/1.8 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        font: 16px 'Helvetica Neue', Arial, Helvetica, sans-serif;
       }
       h1 {
+        font-size: 24px;
         margin: 0;
       }
       #icons {
@@ -22,20 +23,23 @@
     </style>
   </head>
   <body>
-    <h1 style="float: right;">mapmarkerawesome</h1>
-    <div>
-      <div style="float: left; padding: 0 20px 25px 0;">
-        Colour<br>
+    <div style="float: right; text-align: right; width: 50%; padding-bottom: 40px;">
+      <h1>Map Marker Awesome</h1>
+      <p>Simple, modern map markers with your choice of size, colour and <a href="http://fontawesome.io/">Font Awesome</a> icon. Customise and download here, or <a href="https://github.com/jawj/MapMarkerAwesome">embed the JS library</a>.</p>
+    </div>
+    <div style="line-height: 2.0;">
+      <div style="float: left; padding: 0 20px 0 0;">
+        <b>Colour</b><br>
         <input id="color" type="color" value="#4182c3" onchange="draw();">
         <span id="color-value"></span>
       </div>
       <div style="float: left;">
-        Height<br>
+        <b>Height</b><br>
         <input id="height" type="range" min="30" max="60" value="42" size="3" onchange="draw();">
         <span id="height-value"></span>
       </div>
-      <div style="float: left; padding: 25px 0 0 30px;" id="show-more-box"><a href="#" id="show-more">more options &raquo;</a></div>
-      <div id="more" style="clear: both; display: none; margin-bottom: 40px;">
+      <div style="clear: left; padding-top: 10px;" id="show-more-box"><a href="#" id="show-more">more options &raquo;</a></div>
+      <div id="more" style="clear: left; display: none; margin-bottom: 40px;">
         <div>
           Icon colour<br>
           <input id="icon-color" type="color" value="#ffffff" onchange="draw();">
@@ -47,7 +51,7 @@
           <span id="outline-color-value"></span>
         </div>
         <div>
-          Custom icon <a href="https://developer.mozilla.org/en/docs/Web/SVG/Attribute/transform">transform</a><br>
+          Custom icon <a href="https://developer.mozilla.org/en/docs/Web/SVG/Attribute/transform">SVG transform</a><br>
           <input id="transform" value="" onchange="draw();" placeholder="e.g. scale(1.2)">
         </div>
       </div>
