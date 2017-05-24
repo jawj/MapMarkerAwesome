@@ -3418,6 +3418,8 @@ var mapMarkerAwesomeFactory = (function (dataURI) {
             horizAdjX = glyph[0], path = glyph[1];
         }
         var transform = "translate(11.5 10) " + iconTransform + " scale(0.006 -0.006) translate(" + horizAdjX * -0.5 + ", -768)";
+        if (typeof height == 'string')
+            height = parseFloat(height);
         var scale = height / originalHeight;
         var width = Math.round(originalWidth * scale);
         var svg = applyTemplate(svgTemplate, {
