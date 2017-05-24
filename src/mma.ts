@@ -3444,7 +3444,7 @@ const mapMarkerAwesomeFactory = (function (dataURI: boolean) {
       icon?: Color,
       fill?: Color,
       stroke?: Color,
-      height?: number,
+      height?: number | string,
       iconTransform?: string
     } = {}): SVG {
     
@@ -3455,6 +3455,8 @@ const mapMarkerAwesomeFactory = (function (dataURI: boolean) {
       [horizAdjX, path] = glyph;
     }
     const transform = `translate(11.5 10) ${iconTransform} scale(0.006 -0.006) translate(${horizAdjX * -0.5}, -768)`;
+
+    if (typeof height == 'string') height = parseFloat(height);
     const scale = height / originalHeight;
     const width = Math.round(originalWidth * scale);
     
